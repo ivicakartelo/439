@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import { Counter1 } from './features/counter1/Counter1'
+import { Counter } from './features/counter/Counter'
+import { AddPostForm } from './features/posts/AddPostForm'
+import { PostsList } from './features/posts/PostsList'
+import { AddUserForm } from './features/users/AddUserForm'
+import { UsersList } from './features/users/UsersList'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom'
+import { SinglePostPage } from './features/posts/SinglePostPage'
+import { EditPostForm } from './features/posts/EditPostForm'
+import { Link } from 'react-router-dom'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Link to="/">Posts</Link> | 
+      <Link to="/users">Users</Link>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <>
+                <Counter1 />
+                <Counter />
+                <AddPostForm />
+                <PostsList />
+              </>
+            )}
+          />
+          <Route exact path="/users" 
+          render={() => (
+            <>
+              <AddUserForm />
+              <UsersList />
+            </>
+          )}
+          />
+          <Route exact path="/editPost/:postId" component={EditPostForm} />
+          <Route exact path="/posts/:postId" component={SinglePostPage} />
+          <Redirect to="/" />
+        </Switch>
+    </Router>    
   );
 }
-
 export default App;
