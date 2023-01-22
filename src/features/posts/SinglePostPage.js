@@ -1,30 +1,16 @@
-import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { PostAuthor } from './PostAuthor'
 import { TimeAgo } from './TimeAgo'
 import { ReactionButtons } from './ReactionButtons'
 import { AddCommentForm } from './AddCommentForm'
 import { CommentsList } from './CommentsList'
 
-function Counter() {
-  // State: a counter value
-  const [counter, setCounter] = useState(0)
+export default function SinglePostPage() {
 
-  // Action: code that causes an update to the state when something happens
-  const increment = () => {
-    setCounter(prevCounter => prevCounter + 1)
-  }
-  // View: the UI definition
-  return (
-    <div>
-      Value: {counter} <button onClick={increment}>Increment</button>
-    </div>
-  )
-}
+  const params = useParams()
 
-export const SinglePostPage = ({ match }) => {
-  const { postId } = match.params
+  const postId = params.postId
 
   const post = useSelector(state =>
     state.posts.find(post => post.id === postId)
@@ -41,7 +27,6 @@ export const SinglePostPage = ({ match }) => {
   return (
     <section>
       <article>
-        <Counter />
         <h2>{post.title}</h2>
         <PostAuthor userId={post.user} />
         <TimeAgo timestamp={post.date} />

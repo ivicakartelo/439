@@ -5,7 +5,7 @@ import { TimeAgo } from './TimeAgo'
 import { ReactionButtons } from './ReactionButtons'
 import { postDelete } from './postsSlice'
 
-export const PostsList = () => {
+export default function PostsList() {
 const posts = useSelector(state => state.posts)
   const dispatch = useDispatch();
   // Sort posts in reverse chronological order by datetime string
@@ -24,7 +24,7 @@ const posts = useSelector(state => state.posts)
       <TimeAgo timestamp={post.date} />
       <p>{post.content.substring(0, 100)}</p>
       <ReactionButtons post={post} />
-      <Link to={`/posts/${post.id}`}>
+      <Link to={`/${post.id}`}>
         View post
       </Link>
       <button onClick={()=>postRemove(post.id)}>Delete</button>
